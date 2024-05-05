@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Paper Scissors</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+text-align: center;
+background-color: #f3f3f3;
+}
+h1 {
+margin-top: 50px;
+color: #333;
+}
+#game-container {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 50px;
+}
+.choice {
+cursor: pointer;
+margin: 10px;
+padding: 20px;
+border: 2px solid #333;
+border-radius: 10px;
+transition: all 0.3s ease;
+}
+.choice:hover {
+background-color: #eee;
+}
+#result {
+margin-top: 20px;
+font-size: 24px;
+font-weight: bold;
+color: #333;
+}
+.choice img {
+max-width: 100px;
+max-height: 100px;
+}
+</style>
+</head>
+<body>
+<h1>Rock Paper Scissors</h1>
+<div id="game-container">
+<div class="choice" onclick="playGame('rock')">
+<img src="rock.png" alt="Rock">
+<p>Rock</p>
+</div>
+<div class="choice" onclick="playGame('paper')">
+<img src="paper.png" alt="Paper">
+<p>Paper</p>
+</div>
+<div class="choice" onclick="playGame('scissors')">
+<img src="scissors.png" alt="Scissors">
+<p>Scissors</p>
+</div>
+</div>
+<div id="result"></div>
+<script>
+function playGame(playerChoice) {
+const choices = ['rock', 'paper', 'scissors'];
+const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+let result;
+if (playerChoice === computerChoice) {
+result = "IT'S A TIE!";
+} else if (
+(playerChoice === 'rock' && computerChoice === 'scissors') ||
+(playerChoice === 'paper' && computerChoice === 'rock') ||
+(playerChoice === 'scissors' && computerChoice === 'paper')
+) {
+result = "YOU WIN!";
+} else {
+result = "YOU LOSE!";
+}
+document.getElementById('result').innerText = `COMPUTER: ${computerChoice.toUpperCase()}, PLAYER: ${playerChoice.toUpperCase()}, ${result}`;
+}
+</script>
+</body>
+</html>
