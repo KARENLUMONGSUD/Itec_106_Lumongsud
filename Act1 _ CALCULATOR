@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Calculator</title>
+ <style>
+ body {
+ background-color: #fff3f3;
+ font-family: Arial, sans-serif;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ margin: 0;
+}
+.calculator {
+ background-color: #171711df;
+ border-radius: 10px;
+ padding: 20px;
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.button {
+ width: 50px;
+ height: 50px;
+ margin: 5px;
+ font-size: 20px;
+ border: none;
+ border-radius: 50%;
+ cursor: pointer;
+}
+.number {
+ background-color: #ff8c00;
+ color: #fff;
+}
+.operator {
+ background-color: #007bff;
+ color: #fff;
+}
+ </style>
+</head>
+<body>
+ <div class="calculator">
+ <input type="text" id="display" disabled>
+ <div>
+ <button class="button number" onclick="appendToDisplay('7')">7</button>
+ <button class="button number" onclick="appendToDisplay('8')">8</button>
+ <button class="button number" onclick="appendToDisplay('9')">9</button>
+ <button class="button operator" onclick="appendToDisplay('+')">+</button>
+ </div>
+ <div>
+ <button class="button number" onclick="appendToDisplay('4')">4</button>
+ <button class="button number" onclick="appendToDisplay('5')">5</button>
+ <button class="button number" onclick="appendToDisplay('6')">6</button>
+ <button class="button operator" onclick="appendToDisplay('-')">-</button>
+ </div>
+ <div>
+ <button class="button number" onclick="appendToDisplay('1')">1</button>
+ <button class="button number" onclick="appendToDisplay('2')">2</button>
+ <button class="button number" onclick="appendToDisplay('3')">3</button>
+ <button class="button operator" onclick="appendToDisplay('*')">*</button>
+ </div>
+ <div>
+ <button class="button number" onclick="appendToDisplay('0')">0</button>
+ <button class="button number" onclick="appendToDisplay('.')">.</button>
+ <button class="button operator" onclick="calculate()">=</button>
+ <button class="button operator" onclick="appendToDisplay('/')">/</button>
+ </div>
+ <div>
+ <button class="button" onclick="clearDisplay()">C</button>
+ <button class="button" onclick="deleteLastCharacter()">X</button>
+ </div>
+ </div>
+ <script>
+// Function to append value to display
+function appendToDisplay(value) {
+ document.getElementById('display').value += value;
+}
+// Function to clear the display
+function clearDisplay() {
+ document.getElementById('display').value = '';
+}
+// Function to perform calculation
+function calculate() {
+ try {
+ var displayValue = document.getElementById('display').value;
+ var result = eval(displayValue);
+ if (isNaN(result) || !isFinite(result)) {
+ throw "Invalid expression";
+ }
+ document.getElementById('display').value = result;
+ } catch (error) {
+ alert("Error: " + error);
+ }
+}
+// Function to delete the last character from display
+function deleteLastCharacter() {
+ var displayValue = document.getElementById('display').value;
+ document.getElementById('display').value = displayValue.slice(0, -1);
+}
+// Keyboard support
+document.addEventListener('keydown', function(event) {
+ const key = event.key;
+ if (key >= '0' && key <= '9' || key === '+' || key === '-' || key === '*' || key === '/' || key === '.') {
+ appendToDisplay(key);
+ } else if (key === 'Enter') {
+ calculate();
+ } else if (key === 'Backspace') {
+ deleteLastCharacter();
+ }
+});
+ </script>
+</body>
+</html>
