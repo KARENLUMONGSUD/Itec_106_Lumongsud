@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fibonacci Sequence</title>
+    <style>
+        body {
+            text-align: center; /* Center align all content */
+            font-family: Arial, sans-serif; /* Set default font */
+        }
+        #fibonacciForm {
+            margin: 0 auto; /* Center align the form */
+            display: inline-block; /* Ensure the form is inline */
+            max-width: 400px; /* Set maximum width for the form */
+        }
+        #output {
+            margin-top: 20px; /* Add some space between the form and the output */
+            text-align: left; /* Left align the output */
+            max-width: 400px; /* Set maximum width for the output */
+            margin-left: auto; /* Center align the output on larger screens */
+            margin-right: auto; /* Center align the output on larger screens */
+        }
+        #error {
+            color: red; /* Set color to red for error messages */
+            margin-top: 10px; /* Add some space between the input field and the error message */
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 600px) {
+            #fibonacciForm, #output {
+                max-width: 90%; /* Reduce maximum width on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Fibonacci Sequence</h1>
+    <form id="fibonacciForm">
+        <label for="numTermsInput">Enter the number of terms:</label>
+        <input type="number" id="numTermsInput" name="numTermsInput" min="1" max="99" required>
+        <button type="submit">Generate Fibonacci Sequence</button>
+        <div id="error"></div> <!-- Error message will be displayed here -->
+    </form>
+    <div id="output"></div>
+
+    <script>
+        function fibonacci(n) {
+            let fibSequence = [0, 1]; // Initialize with the first two Fibonacci numbers
+            for (let i = 2; i < n; i++) {
+                fibSequence.push(fibSequence[i - 1] + fibSequence[i - 2]);
+            }
+            return fibSequence;
+        }
+
+        document.getElementById("fibonacciForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let numTerms = parseInt(document.getElementById("numTermsInput").value);
+            let errorDiv = document.getElementById("error");
+            if (isNaN(numTerms) || numTerms <= 0 || numTerms >= 100) {
+                errorDiv.textContent = "Error: Please enter a valid positive integer less than 100.";
+                document.getElementById("output").innerHTML = ""; // Clear output if error occurs
+            } else {
+                errorDiv.textContent = ""; // Clear error message if input is valid
+                let sequence = fibonacci(numTerms);
+                document.getElementById("output").innerHTML = "<p>Fibonacci sequence with " + numTerms + " terms:</p><p>" + sequence.join(', ') + "</p>";
+            }
+        });
+    </script>
+</body>
+</html>
