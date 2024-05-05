@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun with Numbers</title>
+</head>
+<body>
+    <script>
+        window.onload = function() {
+            displayMenu();
+        };
+
+        function displayMenu() {
+            alert("Fun with Numbers\n\n1. SECOND HIGHEST  NUMBER\n2. NUMBER COMBINATION\n3. AVERAGE\n4. SAME LAST DIGIT\n5. ODD AND EVEN");
+
+            let choice = prompt("Please enter the number you wish to select:");
+            if (choice === null) {
+                return;
+            }
+            handleChoice(parseInt(choice));
+        }
+
+        function handleChoice(choice) {
+            switch (choice) {
+                case 1:
+                    secondHighestNumber();
+                    break;
+                case 2:
+                    numberCombination();
+                    break;
+                case 3:
+                    average();
+                    break;
+                case 4:
+                    sameLastDigit();
+                    break;
+                case 5:
+                    oddAndEven();
+                    break;
+                default:
+                    alert("Invalid choice. Please select a number from 1 to 5.");
+                    displayMenu();
+                    break;
+            }
+        }
+
+        function secondHighestNumber() {
+            let input = prompt("Enter numbers separated by commas:");
+            if (input === null) {
+                displayMenu();
+                return;
+            }
+            let numbers = input.split(",").map(Number);
+            let secondHighest = getSecondHighest(numbers);
+            alert(`Second highest number: ${secondHighest}`);
+            displayMenu();
+        }
+
+        function getSecondHighest(arr) {
+            arr.sort((a, b) => b - a);
+            return arr[1];
+        }
+
+        function numberCombination() {
+            let input1 = prompt("Enter the first array of integers separated by commas:");
+            if (input1 === null) {
+                displayMenu();
+                return;
+            }
+            let array1 = input1.split(",").map(Number);
+
+            let input2 = prompt("Enter the second array of integers separated by commas (leave blank for default '1,2,3'):");
+            if (input2 === null) {
+                displayMenu();
+                return;
+            }
+            let array2 = input2 === "" ? [1, 2, 3] : input2.split(",").map(Number);
+
+            let combinations = getNumberCombinations(array1, array2);
+            let combinationCount = combinations.length;
+
+            let resultString = "Output:\n";
+            for (let combination of combinations) {
+                resultString += combination.join(", ") + "\n";
+            }
+            resultString += `Combination count: ${combinationCount}`;
+
+            alert(resultString);
+            displayMenu();
+        }
+
+        function getNumberCombinations(arr1, arr2) {
+            let combinations = [];
+            for (let num1 of arr1) {
+                for (let num2 of arr2) {
+                    if (num1 !== num2) {
+                        combinations.push([num1, num2]);
+                    }
+                }
+            }
+            return combinations;
+        }
+
+        function average() {
+            let input = prompt("Enter numbers separated by commas:");
+            if (input === null) {
+                displayMenu();
+                return;
+            }
+            let numbers = input.split(",").map(Number);
+            let firstHalf = numbers.slice(0, Math.ceil(numbers.length / 2));
+            let secondHalf = numbers.slice(Math.ceil(numbers.length / 2));
+            let averageFirstHalf = getAverage(firstHalf);
+            let averageSecondHalf = getAverage(secondHalf);
+            let largerAverage = averageFirstHalf > averageSecondHalf ? averageFirstHalf : averageSecondHalf;
+            alert(`Average: ${largerAverage}`);
+            displayMenu();
+        }
+
+        function getAverage(arr) {
+            if (arr.length === 0) return 0;
+            let sum = arr.reduce((acc, curr) => acc + curr, 0);
+            return Math.floor(sum / arr.length);
+        }
+
+        function sameLastDigit() {
+            let num1 = prompt("Enter the first non-negative integer:");
+            let num2 = prompt("Enter the second non-negative integer:");
+            if (num1 === null || num2 === null) {
+                displayMenu();
+                return;
+            }
+            if (num1 % 10 === num2 % 10) {
+                alert("True: Both numbers have the same last digit.");
+            } else {
+                alert("False: The numbers do not have the same last digit.");
+            }
+            displayMenu();
+        }
+
+        function oddAndEven() {
+            let input = prompt("Enter numbers separated by commas:");
+            if (input === null) {
+                displayMenu();
+                return;
+            }
+            let numbers = input.split(",").map(Number);
+            let oddCount = 0;
+            let evenCount = 0;
+            for (let num of numbers) {
+                if (num % 2 === 0) {
+                    evenCount++;
+                } else {
+                    oddCount++;
+                }
+            }
+            alert(`Number of even numbers: ${evenCount}. Number of odd numbers: ${oddCount}`);
+            displayMenu();
+        }
+
+        // Define other functions similarly
+
+    </script>
+</body>
+</html>
